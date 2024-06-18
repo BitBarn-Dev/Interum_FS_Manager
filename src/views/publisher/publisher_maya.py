@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QDialog, QLabel, QVBoxLayout, QPushButton, QMessageBox, QTableWidget, QTableWidgetItem, QHBoxLayout
+from PySide2.QtWidgets import QDialog, QLabel, QVBoxLayout, QLineEdit, QPushButton, QMessageBox, QTableWidget, QTableWidgetItem, QHBoxLayout
 from PySide2.QtCore import Qt
 import os
 import re
@@ -20,6 +20,13 @@ class PublisherMaya(QDialog):
         self.filename_label = QLabel(f"Publishing: {self.basename}", self)
         self.layout.addWidget(self.filename_label)
 
+        self.variation_label = QLabel("Variation:", self)
+        self.layout.addWidget(self.variation_label)
+
+        self.variation_edit = QLineEdit(self)
+        self.variation_edit.setPlaceholderText("main")
+        self.layout.addWidget(self.variation_edit)
+
         self.sanity_check_button = QPushButton("Run Sanity Check", self)
         self.sanity_check_button.clicked.connect(self.show_sanity_check_results)
         self.layout.addWidget(self.sanity_check_button)
@@ -38,7 +45,8 @@ class PublisherMaya(QDialog):
     def run_sanity_check(self):
         messages = []
         task_code = self.get_task_code(self.file_path)
-        output_path = self.get_output_path(self.file_path, task_code)
+        variation = self.get_variation()
+        output_path = self.get_output_path(self.file_path, task_code, variation)
 
         if os.path.exists(output_path):
             messages.append({"type": "error", "message": f"Output file {output_path} already exists."})
@@ -89,7 +97,8 @@ class PublisherMaya(QDialog):
                 return
 
         task_code = self.get_task_code(self.file_path)
-        output_path = self.get_output_path(self.file_path, task_code)
+        variation = self.get_variation()
+        output_path = self.get_output_path(self.file_path, task_code, variation)
         try:
             cmds.file(rename=output_path)
             cmds.file(save=True, type='mayaAscii')
@@ -107,11 +116,32 @@ class PublisherMaya(QDialog):
             return basename.split('_')[4]
         return None
 
-    def get_output_path(self, file_path, task_code):
+    def get_variation(self):
+        variation = self.variation_edit.text().strip()
+        if not variation:
+            variation = "main"
+        return re.sub(r'[^a-zA-Z0-9]', '', variation)
+
+    def get_output_path(self, file_path, task_code, variation):
         base_path, _ = file_path.split("tasks", 1)
-        output_dir = os.path.join(base_path, "outputs", task_code, self.basename)
+
+        output_file_name = self.insert_variation_in_basename(task_code, variation)
+        output_dir = os.path.join(base_path, "outputs", task_code, output_file_name.split('.')[0])
         os.makedirs(output_dir, exist_ok=True)
-        return os.path.join(output_dir, os.path.basename(file_path))
+
+        return os.path.join(output_dir, output_file_name)
+
+    def insert_variation_in_basename(self, task_code, variation):
+        basename = os.path.basename(self.file_path)
+        match = re.search(r'_(v[0-9]{3})', basename)
+        if match:
+            prefix = basename[:match.start()]
+            version = match.group(1)
+            suffix = basename[match.end():]
+            new_basename = f"{prefix}_{variation}_{version}{suffix}"
+        else:
+            new_basename = f"{basename}_v001"
+        return new_basename
 
     def iterate_and_open_file(self):
         dir_name, file_name = os.path.split(self.file_path)
