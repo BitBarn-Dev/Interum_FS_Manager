@@ -24,7 +24,7 @@ class PublisherMaya(QDialog):
         self.layout.addWidget(self.variation_label)
 
         self.variation_edit = QLineEdit(self)
-        self.variation_edit.setPlaceholderText("main")
+        self.variation_edit.setPlaceholderText('Optional (defaults to "main")')
         self.layout.addWidget(self.variation_edit)
 
         self.sanity_check_button = QPushButton("Run Sanity Check", self)
