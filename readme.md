@@ -24,13 +24,20 @@ The VFX Pipeline Manager is a comprehensive tool designed to streamline the proc
 - **State Management**: Save and restore the state of the application.
 - **Start Files**: Automatically copy start files for new tasks.
 
-### Videos
+## Videos
 
-#### Video 1
-<iframe src="https://drive.google.com/file/d/16yly434CEmUWvp0JXX9e-J74VUeakTmo/preview" width="640" height="480"></iframe>
+### Video 1
 
-#### Video 2
-<iframe src="https://drive.google.com/file/d/1BrCZE4QsCitZhmOGSW-Y082etMivkCuY/preview" width="640" height="480"></iframe>
+<div style="text-align: center;">
+  <iframe src="https://drive.google.com/file/d/16yly434CEmUWvp0JXX9e-J74VUeakTmo/preview" width="640" height="480"></iframe>
+</div>
+
+### Video 2
+
+<div style="text-align: center;">
+  <iframe src="https://drive.google.com/file/d/1BrCZE4QsCitZhmOGSW-Y082etMivkCuY/preview" width="640" height="480"></iframe>
+</div>
+
 
 
 ## Installation
