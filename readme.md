@@ -28,16 +28,11 @@ The VFX Pipeline Manager is a comprehensive tool designed to streamline the proc
 
 ### Video 1
 
-<div style="text-align: center;">
-  <iframe src="https://drive.google.com/file/d/16yly434CEmUWvp0JXX9e-J74VUeakTmo/preview" width="640" height="480"></iframe>
-</div>
+<iframe width="640" height="480" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Video 2
 
-<div style="text-align: center;">
-  <iframe src="https://drive.google.com/file/d/1BrCZE4QsCitZhmOGSW-Y082etMivkCuY/preview" width="640" height="480"></iframe>
-</div>
-
+<iframe width="640" height="480" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 ## Installation
