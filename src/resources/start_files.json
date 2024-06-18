@@ -1,0 +1,40 @@
+{
+    "2D": {
+        "plate": null,
+        "ltcomp": null,
+        "ldcomp": null,
+        "fxcomp": null,
+        "prx": null,
+        "rtm": null,
+        "roto": null,
+        "pnt": null,
+        "dust": null,
+        "denoise": null,
+        "prc": null,
+        "gfx": null,
+        "comp": null,
+        "bty": null,
+        "dmp": null,
+        "dfk": null
+    },
+    "3D": {
+        "mdl": null,
+        "lay": null,
+        "mdlbody": null,
+        "facs": null,
+        "txtr": null,
+        "shd": null,
+        "ldev": null,
+        "trk": null,
+        "rig": null,
+        "anim": null,
+        "crd": null,
+        "cfx": null,
+        "fx": null,
+        "groom": null,
+        "lnr": null,
+        "lgt": null
+    },
+    "default_2D_file": "default_2D_file.ext",
+    "default_3D_file": "default_3D_file.ext"
+}
