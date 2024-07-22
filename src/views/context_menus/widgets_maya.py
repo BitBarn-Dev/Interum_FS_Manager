@@ -91,10 +91,15 @@ class OutputTreeContext(TaskTreeContext):
 
     def reference_item(self, item):
         path = self.build_path_from_item(item)
-        if os.path.isfile(path) and (path.endswith('.ma') or path.endswith('.mb')):
-            cmds.file(path, reference=True)
+        if os.path.isfile(path) and (path.endswith('.ma') or path.endswith('.mb') or path.endswith('.abc')):
+            # Extract the basename without extension to use as namespace
+            namespace = os.path.splitext(os.path.basename(path))[0]
+            if path.endswith('.abc'):
+                cmds.file(path, reference=True, type="Alembic", namespace=namespace)
+            else:
+                cmds.file(path, reference=True, namespace=namespace)
         else:
-            QMessageBox.warning(self.parent_widget, "Reference Error", "Selected item is not a valid Maya file.")
+            QMessageBox.warning(self.parent_widget, "Reference Error", "Selected item is not a valid Maya or Alembic file.")
 
     def build_path_from_item(self, item):
         parts = []
