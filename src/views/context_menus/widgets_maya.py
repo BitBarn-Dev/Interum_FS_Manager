@@ -1,5 +1,5 @@
 import os
-from PySide2.QtWidgets import QMenu, QMessageBox
+from PySide2.QtWidgets import QMenu, QMessageBox, QApplication
 from maya import cmds
 
 class TaskTreeContext:
@@ -10,14 +10,17 @@ class TaskTreeContext:
         menu = QMenu(self.parent_widget)
         open_action = menu.addAction("Open")
         open_folder_action = menu.addAction("Open Folder")
+        copy_path_action = menu.addAction("Copy Path")
         action = menu.exec_(position)
-        self.handle_action(action, open_action, open_folder_action, item)
+        self.handle_action(action, open_action, open_folder_action, copy_path_action, item)
     
-    def handle_action(self, action, open_action, open_folder_action, item):
+    def handle_action(self, action, open_action, open_folder_action, copy_path_action, item):
         if action == open_action:
             self.open_item(item)
         elif action == open_folder_action:
             self.open_item_folder(item)
+        elif action == copy_path_action:
+            self.copy_item_path(item)
 
     def open_item(self, item):
         path = self.build_path_from_item(item)
@@ -55,6 +58,12 @@ class TaskTreeContext:
         path = self.build_path_from_item(item)
         os.startfile(os.path.dirname(path))
 
+    def copy_item_path(self, item):
+        path = self.build_path_from_item(item)
+        clipboard = QApplication.clipboard()
+        clipboard.setText(path)
+        QMessageBox.information(self.parent_widget, "Copy Path", "Path copied to clipboard.")
+
     def build_path_from_item(self, item):
         parts = []
         while item:
@@ -71,16 +80,19 @@ class OutputTreeContext(TaskTreeContext):
         import_action = menu.addAction("Import")
         reference_action = menu.addAction("Reference")
         open_folder_action = menu.addAction("Open Folder")
+        copy_path_action = menu.addAction("Copy Path")
         action = menu.exec_(position)
-        self.handle_action(action, open_folder_action, import_action, reference_action, item)
+        self.handle_action(action, open_folder_action, import_action, reference_action, copy_path_action, item)
 
-    def handle_action(self, action, open_folder_action, import_action, reference_action, item):
+    def handle_action(self, action, open_folder_action, import_action, reference_action, copy_path_action, item):
         if action == open_folder_action:
             self.open_item_folder(item)
         elif action == import_action:
             self.import_item(item)
         elif action == reference_action:
             self.reference_item(item)
+        elif action == copy_path_action:
+            self.copy_item_path(item)
 
     def import_item(self, item):
         path = self.build_path_from_item(item)
